@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindfulBytes - Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3273dc;
+            --dark-color: #333;
+            --light-color: #f8f9fa;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        /* Navigation */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            padding: 15px 0;
+            background-color: white !important;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-brand span {
+            color: var(--primary-color);
+        }
+        
+        .nav-link {
+            margin: 0 10px;
+            position: relative;
+            color: var(--dark-color) !important;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--dark-color);
+        }
+        
+        .dark-mode-toggle:hover {
+            color: var(--primary-color);
+            transform: rotate(30deg);
+        }
+        
+        /* Header */
+        .blog-header {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #3273dc 0%, #1e5bb0 100%);
+            color: white;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .blog-header h1 {
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s;
+        }
+        
+        .blog-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            animation: fadeInUp 1.2s;
+        }
+        
+        .wave-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,224C672,213,768,171,864,144C960,117,1056,107,1152,106.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+        }
+        
+        /* Blog content */
+        .blog-content {
+            padding: 30px;
+            margin-bottom: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            background-color: white;
+            transition: var(--transition);
+            animation: fadeIn 1s;
+        }
+        
+        .blog-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .blog-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        
+        .blog-content:hover img {
+            transform: scale(1.02);
+        }
+        
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .blog-meta span {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .blog-meta i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background-color: rgba(50, 115, 220, 0.1);
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            transition: var(--transition);
+        }
+        
+        .category-badge:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .blog-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            transition: var(--transition);
+        }
+        
+        .blog-title:hover {
+            color: var(--primary-color);
+        }
+        
+        .blog-excerpt {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .read-more i {
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+        
+        .read-more:hover {
+            color: #1e5bb0;
+        }
+        
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Author section */
+        .author-section {
+            display: flex;
+            align-items: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .author-info h5 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .author-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-widget {
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            background-color: white;
+            transition: var(--transition);
+            animation: fadeIn 1.2s;
+        }
+        
+        .sidebar-widget:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-widget h4 {
+            position: relative;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .sidebar-widget h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .post-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .post-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .post-list li:last-child {
+            border: none;
+        }
+        
+        .post-list a {
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+            transition: var(--transition);
+        }
+        
+        .post-list a:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            padding: 5px 12px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #555;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 60px 0 20px;
+            position: relative;
+        }
+        
+        .footer-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            transform: rotate(180deg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23f8f9fa' fill-opacity='1' d='M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,224C672,213,768,171,864,144C960,117,1056,107,1152,106.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+        }
+        
+        .footer-widget h5 {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-widget h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            color: #ecf0f1;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+        
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-top:hover {
+            background-color: #1e5bb0;
+            transform: translateY(-5px);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsiveness */
+        @media (max-width: 992px) {
+            .sidebar {
+                margin-top: 50px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .blog-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .blog-content {
+                padding: 20px;
+            }
+            
+            .blog-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+            
+            .blog-header p {
+                font-size: 1rem;
+            }
+            
+            .blog-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .blog-meta span {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Mindful<span>Bytes</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="blog.html">Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <button class="dark-mode-toggle ms-3">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Header -->
+    <header class="blog-header">
+        <div class="container">
+            <h1>MindfulBytes Blog</h1>
+            <p>Insights, tutorials, and thought-provoking perspectives on technology, innovation, and the digital world</p>
+        </div>
+        <div class="wave-bottom"></div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Blog Posts Section -->
+            <div class="col-lg-8">
+                <!-- Featured Post -->
+                <article class="blog-content">
+                    <span class="category-badge">Featured</span>
+                    <h2 class="blog-title">The Future of AI in Everyday Applications</h2>
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Feb 24, 2025</span>
+                        <span><i class="far fa-clock"></i> 8 min read</span>
+                        <span><i class="far fa-comment"></i> 12 comments</span>
+                    </div>
+                    <img src="/api/placeholder/800/400" alt="AI applications" />
+                    <div class="blog-excerpt">
+                        <p>How artificial intelligence is transforming from experimental technology to an essential part of our daily digital experiences. From voice assistants to personalized recommendations, AI is becoming more integrated into our lives than ever before.</p>
+                        <p>As we move further into 2025, the applications of artificial intelligence continue to expand beyond specialized domains into everyday technology that billions of people interact with daily. This shift represents not just a technological evolution, but a fundamental change in how we approach problem-solving and user experience design.</p>
+                    </div>
+                    <a href="#" class="read-more">Continue Reading <i class="fas fa-arrow-right"></i></a>
+                    
+                    <div class="author-section">
+                        <img src="/api/placeholder/100/100" alt="Author" class="author-img" />
+                        <div class="author-info">
+                            <h5>Sarah Chen</h5>
+                            <p>AI Research Analyst</p>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Regular Posts -->
+                <article class="blog-content">
+                    <span class="category-badge">AI & Machine Learning</span>
+                    <h2 class="blog-title">How AI is Revolutionizing Healthcare</h2>
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Feb 20, 2025</span>
+                        <span><i class="far fa-clock"></i> 6 min read</span>
+                        <span><i class="far fa-comment"></i> 8 comments</span>
+                    </div>
+                    <img src="/api/placeholder/800/400" alt="AI in Healthcare" />
+                    <div class="blog-excerpt">
+                        <p>Discover how artificial intelligence is transforming diagnostics, treatment, and patient care in the healthcare industry. From predictive analytics to personalized medicine, AI is reshaping how healthcare providers deliver services.</p>
+                    </div>
+                    <a href="#" class="read-more">Continue Reading <i class="fas fa-arrow-right"></i></a>
+                    
+                    <div class="author-section">
+                        <img src="/api/placeholder/100/100" alt="Author" class="author-img" />
+                        <div class="author-info">
+                            <h5>Dr. James Wilson</h5>
+                            <p>Health Technology Specialist</p>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="blog-content">
+                    <span class="category-badge">Web Development</span>
+                    <h2 class="blog-title">Building Scalable Web Applications</h2>
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Feb 18, 2025</span>
+                        <span><i class="far fa-clock"></i> 7 min read</span>
+                        <span><i class="far fa-comment"></i> 5 comments</span>
+                    </div>
+                    <img src="/api/placeholder/800/400" alt="Web Development" />
+                    <div class="blog-excerpt">
+                        <p>Learn the best practices for designing and developing web applications that can handle millions of users. From microservices architecture to efficient database design, this guide covers essential strategies for building robust, scalable applications.</p>
+                    </div>
+                    <a href="#" class="read-more">Continue Reading <i class="fas fa-arrow-right"></i></a>
+                    
+                    <div class="author-section">
+                        <img src="/api/placeholder/100/100" alt="Author" class="author-img" />
+                        <div class="author-info">
+                            <h5>Michael Torres</h5>
+                            <p>Senior Full-Stack Developer</p>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="blog-content">
+                    <span class="category-badge">Cybersecurity</span>
+                    <h2 class="blog-title">Top Cybersecurity Threats in 2025</h2>
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Feb 15, 2025</span>
+                        <span><i class="far fa-clock"></i> 5 min read</span>
+                        <span><i class="far fa-comment"></i> 3 comments</span>
+                    </div>
+                    <img src="/api/placeholder/800/400" alt="Cybersecurity" />
+                    <div class="blog-excerpt">
+                        <p>Explore the most pressing cybersecurity challenges and how to protect your digital assets. With the rise of quantum computing threats and increasingly sophisticated social engineering attacks, staying secure requires new approaches to digital security.</p>
+                    </div>
+                    <a href="#" class="read-more">Continue Reading <i class="fas fa-arrow-right"></i></a>
+                    
+                    <div class="author-section">
+                        <img src="/api/placeholder/100/100" alt="Author" class="author-img" />
+                        <div class="author-info">
+                            <h5>Alex Johnson</h5>
+                            <p>Cybersecurity Analyst</p>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Pagination -->
+                <nav class="my-5">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4 sidebar">
+                <!-- Search Widget -->
+                <div class="sidebar-widget">
+                    <h4>Search</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for articles...">
+                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Recent Posts Widget -->
+                <div class="sidebar-widget">
+                    <h4>Recent Posts</h4>
+                    <ul class="post-list">
+                        <li><a href="#">The Future of AI in Everyday Applications</a></li>
+                        <li><a href="#">How AI is Revolutionizing Healthcare</a></li>
+                        <li><a href="#">Building Scalable Web Applications</a></li>
+                        <li><a href="#">Top Cybersecurity Threats in 2025</a></li>
+                        <li><a href="#">Quantum Computing: A Practical Guide</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories Widget -->
+                <div class="sidebar-widget">
+                    <h4>Categories</h4>
+                    <ul class="post-list">
+                        <li><a href="#">AI & Machine Learning</a></li>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Cybersecurity</a></li>
+                        <li><a href="#">Data Science</a></li>
+                        <li><a href="#">Cloud Computing</a></li>
+                        <li><a href="#">Mobile Development</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Tags Widget -->
+                <div class="sidebar-widget">
+                    <h4>Popular Tags</h4>
+                    <div class="tag-cloud">
+                        <a href="#" class="tag">JavaScript</a>
+                        <a href="#" class="tag">React</a>
+                        <a href="#" class="tag">Python</a>
+                        <a href="#" class="tag">AI</a>
+                        <a href="#" class="tag">Machine Learning</a>
+                        <a href="#" class="tag">Cloud</a>
+                        <a href="#" class="tag">DevOps</a>
+                        <a href="#" class="tag">Security</a>
+                        <a href="#" class="tag">Node.js</a>
+                        <a href="#" class="tag">Database</a>
+                    </div>
+                </div>
+                
+                <!-- Newsletter Widget -->
+                <div class="sidebar-widget">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to our newsletter to get the latest updates directly to your inbox!</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email address">
+                        <button class="btn btn-primary">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-wave"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 footer-widget">
+                    <h5>About MindfulBytes</h5>
+                    <p>A technology blog dedicated to providing insights, tutorials, and thought-provoking perspectives on the evolving digital landscape.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 footer-widget">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Articles</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 footer-widget">
+                    <h5>Contact Info</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope me-2"></i> contact@mindfulbytes.com</li>
+                        <li><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Tech Street, San Francisco, CA</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 MindfulBytes. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scroll to top button -->
+    <div class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+        
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                // Would update dark mode styles here
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+        
+        // Scroll to top button
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        }); 
+        
