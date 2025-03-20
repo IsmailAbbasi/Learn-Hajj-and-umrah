@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> - A  Blog</title>
+    <!-- Update Google Fonts to include Scheherazade New -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* Reset and Base Styles */
         * {
@@ -20,6 +24,45 @@
             transition: background-color 0.5s ease;
         }
 
+        /* Add Urdu and Arabic text styling */
+        .arabic-text {
+            font-family: 'Scheherazade New', serif;
+            direction: rtl;
+            text-align: right;
+            line-height: 1.8;
+        }
+        
+        .urdu-text {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            direction: rtl;
+            text-align: right;
+            line-height: 1.8;
+        }
+        
+        /* Featured post title with Urdu/Arabic styling */
+        .featured-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        
+        .featured-title.urdu-text {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            direction: rtl;
+            text-align: right;
+            line-height: 1.8;
+            font-size: 1.7rem;
+        }
+        
+        /* New Arabic featured title styling */
+        .featured-title.arabic-text {
+            font-family: 'Scheherazade New', serif;
+            direction: rtl;
+            text-align: right;
+            line-height: 1.7;
+            font-size: 1.8rem;
+        }
+        
         a {
             text-decoration: none;
             color: #0066cc;
@@ -414,6 +457,14 @@
             font-size: 2rem;
             margin-bottom: 15px;
             line-height: 1.3;
+        }
+
+        .featured-title.urdu-text {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            direction: rtl;
+            text-align: right;
+            line-height: 1.8;
+            font-size: 1.7rem;
         }
 
         .featured-excerpt {
@@ -1095,7 +1146,7 @@
         <div class="container">
             <h1>Learn  & </h1>
             <p>Insights, tutorials, and thought-provoking perspectives on the evolving world of technology</p>
-            <a href="#" class="hero-button">Start Reading</a>
+            <a href="blogs/blog1.html" class="hero-button">Start Reading</a>
         </div>
     </section>
 
@@ -1107,13 +1158,29 @@
             </div>
             <div class="featured-content">
                 <span class="featured-tag">Featured</span>
-                <h2 class="featured-title">The Future of AI in Everyday Applications</h2>
+                <h2 class="featured-title arabic-text">
+                    لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ لَا شَرِيكَ لَكَ  
+
+
+حج بیت الله
+مرتبہ
+عین الحق عفى عنه
+347/83 گلستان کالونی ( دفتی مل )
+پرانا ٹکیت گنج لکھنو (یوپی ) ۲۲۶۰۱۷
+9415757437 موبائل نمبر  
+
+
+اپیل
+مدرسہ تحفیظ القرآن جو ایک جدید ادارہ ہے اللہ کے شکر سے یہ ادارہ جدید عمارت میں قائم
+کیا گیا ہے اس ادارہ میں تعلیم و تربیت کے ساتھ بچوں کے قیام وطعام کا بھی نظم ہے اس ادارہ میں
+شعبہ حفظ و قرآت کیسا تھ پرائمری درجہ کا بھی نظم کیا گیا ہے۔
+                </h2>
                 <p class="featured-excerpt">How artificial intelligence is transforming from experimental technology to an essential part of our daily digital experiences.</p>
                 <div class="post-meta">
                     <span class="post-date">Feb 24, 2025</span>
                     <span class="post-read-time">8 min read</span>
                 </div>
-                <a href="#" class="read-more">Read Article <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                <a href="blogs/blog1.html" class="read-more">Read Article <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
             </div>
         </div>
 
@@ -1263,6 +1330,50 @@
 
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // This function detects if text contains Arabic or Urdu and applies the appropriate class
+        document.addEventListener('DOMContentLoaded', function() {
+            // Arabic Unicode ranges
+            const arabicRegex = /[\u0600-\u06FF\u0750-\u077F]/;
+            
+            // Urdu-specific characters that help distinguish from Arabic
+            const urduRegex = /[\u0679\u0688\u0691\u06AF\u06A9\u06C1\u06D2]/;
+            
+            // Find elements that might contain Arabic/Urdu text and haven't been styled yet
+            document.querySelectorAll('h1, h2, h3, p, div').forEach(el => {
+                const text = el.innerText;
+                if (text && arabicRegex.test(text)) {
+                    if (urduRegex.test(text)) {
+                        // Contains Urdu-specific characters
+                        el.classList.add('urdu-text');
+                    } else {
+                        // Contains Arabic but no Urdu-specific characters
+                        el.classList.add('arabic-text');
+                    }
+                }
+            });
+            
+            // Specifically handle the featured title
+            const featuredTitle = document.querySelector('.featured-post .featured-title');
+            if (featuredTitle) {
+                // First check if it has Arabic text but not Urdu-specific characters
+                const text = featuredTitle.innerText;
+                // Clear any existing font classes to avoid conflicts
+                featuredTitle.classList.remove('urdu-text', 'arabic-text');
+                
+                // Check if the text has the Talbiyah (first line which is Arabic)
+                if (text.includes('لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ')) {
+                    // Since your featured content has mixed Arabic and Urdu,
+                    // Let's add a specific class for this mixed content
+                    featuredTitle.classList.add('arabic-text');
+                    
+                    // Add inline style to ensure it takes effect
+                    featuredTitle.style.fontFamily = "'Scheherazade New', serif";
+                } else if (urduRegex.test(text)) {
+                    featuredTitle.classList.add('urdu-text');
+                }
+            }
         });
     </script>
 </body>
